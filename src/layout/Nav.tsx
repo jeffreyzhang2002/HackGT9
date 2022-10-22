@@ -2,6 +2,8 @@ import React from "react";
 import Styled from "styled-components";
 
 import Gears from "./../assets/Gears.png";
+import { ProgramState } from "./App";
+import Interpret from "../compiler/Interpret";
 
 const Container = Styled.nav`
     display: flex;    
@@ -37,7 +39,7 @@ const Button = Styled.button<ButtonProps>`
     background-color: white;
     border: none;
   
-    text-decoration: ${(props) => props.isEnabled != undefined? "underline" : "none"};
+    text-decoration: ${(props) => props.isEnabled !== undefined? "underline" : "none"};
     text-decoration-color: ${(props) => props.isEnabled === true? "#90EE90" : "red"};
   
     &:hover {  
@@ -72,7 +74,22 @@ const Icon = Styled.div`
     }
 `
 
-export default function Nav({editMode, setEditMode} : {editMode: boolean, setEditMode: (mode: boolean) => void}) : JSX.Element {
+export default function Nav({editMode, setEditMode, code, state, setState} : {editMode: boolean, setEditMode: (mode: boolean) => void, code: string, state: ProgramState, setState: (state: ProgramState) => void}) : JSX.Element {
+
+    const [lines, setLines] = React.useState<string[]>([]);
+
+    const onToggleMode = () => {
+        setEditMode(!editMode);
+        if(editMode)
+            setLines(code.split("\n"));
+    }
+
+    const onStep = () => {
+
+        if(state.linenumber < lines.length) {
+            setState(Interpret(state, lines[state.linenumber]));
+        }
+    }
 
     return (
         <Container>
@@ -81,7 +98,7 @@ export default function Nav({editMode, setEditMode} : {editMode: boolean, setEdi
                 <Title> Interpreter </Title>
             </Alignment>
             <Alignment style={{flexDirection: "row-reverse"}}>
-                <Button onClick={() => setEditMode(!editMode)}>
+                <Button onClick={onToggleMode}>
                     {editMode? "Mode: Edit" : "Mode: Run"}
                 </Button>
                 {
@@ -90,10 +107,10 @@ export default function Nav({editMode, setEditMode} : {editMode: boolean, setEdi
                             <Button>
                                 Run
                             </Button>
-                            <Button>
+                            <Button onClick={onStep}>
                                 Step
                             </Button>
-                            <Button>
+                            <Button onClick={() => setState({linenumber: 0, error: false})}>
                                 Reset
                             </Button>
                         </> 

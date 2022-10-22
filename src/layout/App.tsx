@@ -5,7 +5,6 @@ import Nav from "./Nav";
 import HorizontalDivider from "./horizontalDivider/HorizontalDivider";
 import CodeEditor from "../components/CodeEditor";
 import CodeDisplay from "../components/CodeDisplay";
-import Compile from "../compiler/Compiler";
 
 const Container = Styled.main`
     
@@ -20,8 +19,11 @@ const Container = Styled.main`
 
 export interface ProgramState {
     linenumber: number;
-    [key: string] : any
-
+    error: boolean;
+    errorCode?: string;
+    state?: {
+            [key: string] : any
+    }
 }
 
 
@@ -30,17 +32,14 @@ export default function App(): JSX.Element {
 
     const [editMode, setEditMode] = React.useState<boolean>(true);
     const [code, setCode] = React.useState<string>(" ");
-    const Lines = React.useMemo( () => {code.split("\n")}, [code])
-    const [state, setState] = React.useState<ProgramState>({linenumber: 1});
-
-    
-
+    const [state, setState] = React.useState<ProgramState>({linenumber: 0, error: false});
+   
     return (
         <Container>
-            <Nav editMode={editMode} setEditMode={setEditMode}/>
+            <Nav editMode={editMode} setEditMode={setEditMode} code={code} state={state} setState={setState}/>
             <HorizontalDivider>
                 <CodeEditor editMode={editMode} code={code} setCode={setCode}/>
-                <CodeDisplay editMode={editMode} content={" "}/>
+                <CodeDisplay editMode={editMode} state={state}/>
             </HorizontalDivider>
         </Container>
     );

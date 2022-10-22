@@ -1,6 +1,8 @@
 import React from "react";
 import Styled from "styled-components";
+import { ProgramState } from "../layout/App";
 import HelpScreen from "./HelpScreen";
+import StateDisplay from "./StateDisplay";
 
 const Container = Styled.div`
     width: 100%;
@@ -11,13 +13,11 @@ const Container = Styled.div`
     font-size: 16px;
 `
 
-
-
-export default function CodeDisplay({content, editMode}: {content: string | undefined, editMode: boolean}) {
+export default function CodeDisplay({state, editMode}: {state: ProgramState, editMode: boolean}) {
 
     return (
         <Container>
-            {editMode? <HelpScreen/> : <div> </div> }
+            {editMode? <HelpScreen/> : <StateDisplay state = {state}/>}   
         </Container>
     );
 }
