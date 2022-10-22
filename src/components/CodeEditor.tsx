@@ -8,7 +8,7 @@ const Container = Styled.div`
     width: 100%;
     padding: 1rem 0.5rem;
 `
-export default function CodeEditor({code, setCode}:{code: string | undefined, setCode: (v:string) => void}) {
+export default function CodeEditor({code, setCode, editMode}:{code: string | undefined, setCode: (v:string) => void, editMode: boolean}) {
 
     return (
         <Container>
@@ -19,6 +19,7 @@ export default function CodeEditor({code, setCode}:{code: string | undefined, se
                 style={{fontSize: "16px", border: "none", outline: "none"}}
                 autoFocus={false}
                 placeholder={"Enter Code here"}
+                editable={editMode}
             />
         </Container>
     )

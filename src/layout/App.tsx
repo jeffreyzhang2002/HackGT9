@@ -5,6 +5,7 @@ import Nav from "./Nav";
 import HorizontalDivider from "./horizontalDivider/HorizontalDivider";
 import CodeEditor from "../components/CodeEditor";
 import CodeDisplay from "../components/CodeDisplay";
+import Compile from "../compiler/Compiler";
 
 const Container = Styled.main`
     
@@ -16,21 +17,30 @@ const Container = Styled.main`
     grid-template-rows: 5vh 95vh;   
 `
 
-export interface EditSettings {
-    comments: boolean
-    hotReload: boolean
+
+export interface ProgramState {
+    linenumber: number;
+    [key: string] : any
+
 }
+
+
 
 export default function App(): JSX.Element {
 
-    const [code, setCode] = React.useState<string>();
+    const [editMode, setEditMode] = React.useState<boolean>(true);
+    const [code, setCode] = React.useState<string>(" ");
+    const Lines = React.useMemo( () => {code.split("\n")}, [code])
+    const [state, setState] = React.useState<ProgramState>({linenumber: 1});
+
+    
 
     return (
         <Container>
-            <Nav/>
+            <Nav editMode={editMode} setEditMode={setEditMode}/>
             <HorizontalDivider>
-                <CodeEditor code={code} setCode={setCode}/>
-                <CodeDisplay/>
+                <CodeEditor editMode={editMode} code={code} setCode={setCode}/>
+                <CodeDisplay editMode={editMode} content={" "}/>
             </HorizontalDivider>
         </Container>
     );

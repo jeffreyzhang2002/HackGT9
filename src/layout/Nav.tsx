@@ -1,6 +1,5 @@
 import React from "react";
 import Styled from "styled-components";
-import {EditSettings} from "./App";
 
 import Gears from "./../assets/Gears.png";
 
@@ -24,7 +23,6 @@ const Title = Styled.h1`
     padding: 0;
       
 `
-
 interface ButtonProps {
     readonly isEnabled?: boolean
 }
@@ -74,7 +72,7 @@ const Icon = Styled.div`
     }
 `
 
-export default function Nav() : JSX.Element {
+export default function Nav({editMode, setEditMode} : {editMode: boolean, setEditMode: (mode: boolean) => void}) : JSX.Element {
 
     return (
         <Container>
@@ -83,15 +81,25 @@ export default function Nav() : JSX.Element {
                 <Title> Interpreter </Title>
             </Alignment>
             <Alignment style={{flexDirection: "row-reverse"}}>
-                <Button>
-                    Help
+                <Button onClick={() => setEditMode(!editMode)}>
+                    {editMode? "Mode: Edit" : "Mode: Run"}
                 </Button>
-                <Button>
-                    Run
-                </Button>
-                <Button>
-                    Step
-                </Button>
+                {
+                    !editMode? 
+                        <>
+                            <Button>
+                                Run
+                            </Button>
+                            <Button>
+                                Step
+                            </Button>
+                            <Button>
+                                Reset
+                            </Button>
+                        </> 
+                    :
+                        <></>
+                }
             </Alignment>
         </Container>
     )
