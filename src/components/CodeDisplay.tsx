@@ -1,6 +1,5 @@
 import React from "react";
 import Styled from "styled-components";
-import {CodeSection} from "../compiler/Compiler";
 
 const Container = Styled.div`
 
@@ -40,23 +39,11 @@ const FragmentLine = Styled.div`
     -khtml-user-select: none; 
 `
 
-
-function CodeFragment({id, content} : {id : number, content: CodeSection}) {
-
-    return (
-        <FragmentContainer>
-            <FragmentLine> {id} </FragmentLine>
-            {content.line}
-        </FragmentContainer>
-    )
-
-};
-
-export default function CodeDisplay({content} : {content: CodeSection[]}) {
+export default function CodeDisplay() {
 
     return (
         <Container>
-            {content.map((content: CodeSection, index : number) => {return <CodeFragment id={index + 1} content={content}/>})}
+            test
         </Container>
     );
 }

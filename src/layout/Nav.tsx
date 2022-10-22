@@ -74,43 +74,24 @@ const Icon = Styled.div`
     }
 `
 
-export default function Nav(props: {mode : boolean, toggleMode: () => void, editSettings : EditSettings, setEditSettings: (v : EditSettings) => void}) : JSX.Element {
+export default function Nav() : JSX.Element {
 
     return (
         <Container>
             <Alignment style={{flexDirection: "row"}}>
                 <Icon/>
-                <Title> Assembly Templates </Title>
+                <Title> Interpreter </Title>
             </Alignment>
             <Alignment style={{flexDirection: "row-reverse"}}>
-                <Button onClick={props.toggleMode}>
-                    {props.mode? "Debug" : "Edit"}
+                <Button>
+                    Help
                 </Button>
-                {
-                    props.mode? (
-                        <>
-                            <Button>
-                                Run
-                            </Button>
-                            <Button>
-                                Step
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <Button>
-                                Compile
-                            </Button>
-                            <Button isEnabled={props.editSettings.hotReload} onClick={()=>props.setEditSettings({...props.editSettings, hotReload: !props.editSettings.hotReload})}>
-                                Hot Reload
-                            </Button>
-                            <Button isEnabled={props.editSettings.comments} onClick={()=>props.setEditSettings({...props.editSettings, comments: !props.editSettings.comments})}>
-                                Comments
-                            </Button>
-                        </>
-                    )
-                }
-
+                <Button>
+                    Run
+                </Button>
+                <Button>
+                    Step
+                </Button>
             </Alignment>
         </Container>
     )
