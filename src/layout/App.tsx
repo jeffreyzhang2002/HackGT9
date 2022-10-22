@@ -21,7 +21,7 @@ export interface ProgramState {
     linenumber: number;
     error: boolean;
     errorCode?: string;
-    state?: {
+    state: {
             [key: string] : any
     }
 }
@@ -32,7 +32,7 @@ export default function App(): JSX.Element {
 
     const [editMode, setEditMode] = React.useState<boolean>(true);
     const [code, setCode] = React.useState<string>(" ");
-    const [state, setState] = React.useState<ProgramState>({linenumber: 0, error: false});
+    const [state, setState] = React.useState<ProgramState>({linenumber: 0, error: false, state: {}});
    
     return (
         <Container>

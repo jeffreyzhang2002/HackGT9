@@ -110,7 +110,7 @@ export default function Nav({editMode, setEditMode, code, state, setState} : {ed
                             <Button onClick={onStep}>
                                 Step
                             </Button>
-                            <Button onClick={() => setState({linenumber: 0, error: false})}>
+                            <Button onClick={() => setState({linenumber: 0, error: false, state: {}})}>
                                 Reset
                             </Button>
                         </> 
