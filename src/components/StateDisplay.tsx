@@ -13,9 +13,10 @@ export default function StateDisplay({state} : {state: ProgramState}) : JSX.Elem
 
     const variablesDisplay = [];
 
+    let i = 0;
     for(const key in state.state) {
         variablesDisplay.push(
-            <p> {key + " : " + state.state[key]}</p>
+            <p key={i++}> {key + " : " + state.state[key]}</p>
         );
     }
 

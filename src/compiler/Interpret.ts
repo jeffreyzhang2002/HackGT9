@@ -32,9 +32,30 @@ function addCommand(nextState: ProgramState, state: ProgramState, tokens: string
 
 }
 
+function subCommand(nextState: ProgramState, state: ProgramState, tokens: string[]) : ProgramState {
+    if(tokens.length === 4 && state.state[tokens[1]] && state.state[tokens[2]] && state.state[tokens[3]])
+    {
+
+        if(!isNaN(parseInt(state.state[tokens[2]])) && !isNaN(parseInt(state.state[tokens[3]]))) {
+            nextState.state[tokens[1]] = parseInt(state.state[tokens[2]]) - parseInt(state.state[tokens[3]]);
+            return nextState;
+        }
+
+        nextState.state[tokens[1]] = state.state[tokens[2]] - state.state[tokens[3]];
+        return nextState;
+    }
+
+    nextState.error = true;
+    nextState.errorCode = "Invalid Parameter"
+    return nextState;
+
+
+}
+
 const Commands: {[key: string] : (nextState: ProgramState, state: ProgramState, tokens: string[]) => ProgramState } = {
     "var": varCommand,
-    "add": addCommand
+    "add": addCommand,
+    "sub": subCommand
 
 }
 
@@ -47,8 +68,6 @@ export default function Interpret(state: ProgramState, line: string): ProgramSta
     
     if(tokens.length === 0)
         return nextState;
-
-    console.log(tokens[0].toLocaleLowerCase())
 
     const funct = Commands[tokens[0].toLowerCase()];
     
